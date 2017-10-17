@@ -195,26 +195,26 @@ namespace I2CAccelerometer
             I2CAccel.WriteRead(RegAddrBuf_X, ReadBuf_X);
             int AccelerationRawX = BitConverter.ToInt32(ReadBuf_X, 0); //Raw data is 20bit, so 32 is the minimum Bitconverter amount
             int AccelerationShiftedX = AccelerationRawX >> 12; //cancel out the reserve bit and the byte caused by extra read
-            //if(AccelerationShiftedX & (1<<19)){
-            //   AccelerationShiftedX ^= (1<<19)|(1<<31);
-            //}
+            if(AccelerationShiftedX & (1<<19)){
+                AccelerationShiftedX ^= (1<<19)|(1<<31);
+            }
             //byte[] RegAddrBuf_Y = new byte[] { ACCEL_REG_Y };
             //byte[] ReadBuf_Y = new byte[4];
             //I2CAccel.WriteRead(RegAddrBuf_Y, ReadBuf_Y);
             int AccelerationRawY = BitConverter.ToInt32(ReadBuf_X, 3);
             int AccelerationShiftedY = AccelerationRawY >> 12;
-            //if(AccelerationShiftedY & (1<<19)){
-            //    AccelerationShiftedY ^= (1<<19)|(1<<31);
-            //}
+            if(AccelerationShiftedY & (1<<19)){
+                AccelerationShiftedY ^= (1<<19)|(1<<31);
+            }
 
             //byte[] RegAddrBuf_Z = new byte[] { ACCEL_REG_Z };
             //byte[] ReadBuf_Z = new byte[4];
             //I2CAccel.WriteRead(RegAddrBuf_Z, ReadBuf_Z);
             int AccelerationRawZ = BitConverter.ToInt32(ReadBuf_X, 6);
             int AccelerationShiftedZ = AccelerationRawZ >> 12;
-            //if(AccelerationShiftedZ & (1<<19)){
-            //    AccelerationShiftedZ ^= (1<<19)|(1<<31);
-            //}
+            if(AccelerationShiftedZ & (1<<19)){
+                AccelerationShiftedZ ^= (1<<19)|(1<<31);
+            }
             /* Convert raw values to G's */
             Acceleration accel;
             accel.X = (double)AccelerationShiftedX / UNITS_PER_G; 
