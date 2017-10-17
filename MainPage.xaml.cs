@@ -191,21 +191,21 @@ namespace I2CAccelerometer
              */
 
             byte[] RegAddrBuf_X = new byte[] { ACCEL_REG_X }; /* Register address we want to read from                                         */
-            byte[] ReadBuf_X = new byte[4];                   /* We read 4 bytes sequentially */
+            byte[] ReadBuf_X = new byte[10];                   /* We read 4 bytes sequentially */
             I2CAccel.WriteRead(RegAddrBuf_X, ReadBuf_X);
             int AccelerationRawX = BitConverter.ToInt32(ReadBuf_X, 0); //Raw data is 20bit, so 32 is the minimum Bitconverter amount
             int AccelerationShiftedX = AccelerationRawX >> 12; //cancel out the reserve bit and the byte caused by extra read
 
-            byte[] RegAddrBuf_Y = new byte[] { ACCEL_REG_Y };
-            byte[] ReadBuf_Y = new byte[4];
-            I2CAccel.WriteRead(RegAddrBuf_Y, ReadBuf_Y);
-            int AccelerationRawY = BitConverter.ToInt32(ReadBuf_Y, 0);
+            //byte[] RegAddrBuf_Y = new byte[] { ACCEL_REG_Y };
+            //byte[] ReadBuf_Y = new byte[4];
+            //I2CAccel.WriteRead(RegAddrBuf_Y, ReadBuf_Y);
+            int AccelerationRawY = BitConverter.ToInt32(ReadBuf_X, 3);
             int AccelerationShiftedY = AccelerationRawY >> 12;
 
-            byte[] RegAddrBuf_Z = new byte[] { ACCEL_REG_Z };
-            byte[] ReadBuf_Z = new byte[4];
-            I2CAccel.WriteRead(RegAddrBuf_Z, ReadBuf_Z);
-            int AccelerationRawZ = BitConverter.ToInt32(ReadBuf_Z, 0);
+            //byte[] RegAddrBuf_Z = new byte[] { ACCEL_REG_Z };
+            //byte[] ReadBuf_Z = new byte[4];
+            //I2CAccel.WriteRead(RegAddrBuf_Z, ReadBuf_Z);
+            int AccelerationRawZ = BitConverter.ToInt32(ReadBuf_X, 6);
             int AccelerationShiftedZ = AccelerationRawZ >> 12;
 
             /* Convert raw values to G's */
